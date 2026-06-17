@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1er Séminaire National - Transport et Stockage des Hydrocarbures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .location {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .location strong {
+            color: #667eea;
+        }
+
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 480px) {
+            .buttons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn {
+            padding: 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-location {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .btn-flyer {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .btn-program {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .btn-contact {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .btn-icon {
+            font-size: 24px;
+        }
+
+        .btn-text {
+            font-size: 14px;
+        }
+
+        .contact-info {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .contact-info p {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .contact-info strong {
+            color: #ff6b6b;
+            font-size: 18px;
+        }
+
+        .qr-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+        }
+
+        .qr-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .qr-url {
+            font-size: 12px;
+            color: #999;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 1er Séminaire National</h1>
+        <p class="subtitle">Transport, Stockage des Hydrocarbures, Hydrogène et Réhabilitation des pipelines</p>
+
+        <div class="location">
+            <strong>📍 Hôtel PLAZA de Boumerdès</strong><br>
+            QF8F+4V3, Boumerdès
+        </div>
+
+        <div class="buttons-grid">
+            <a href="https://maps.google.com/?q=QF8F%2B4V3" target="_blank" class="btn btn-location">
+                <span class="btn-icon">🗺️</span>
+                <span class="btn-text">Voir la localisation</span>
+            </a>
+
+            <a href="https://drive.google.com/file/d/1bLq56Uktq-GbcdIOYp5CiKMU_FEh0NHe/view?usp=sharing" target="_blank" class="btn btn-flyer">
+                <span class="btn-icon">📄</span>
+                <span class="btn-text">Télécharger le dépliant</span>
+            </a>
+
+            <a href="https://drive.google.com/file/d/1pFiMQ_9avpjxXHw7CXVbqwWt5pa2ivvZ/view?usp=sharing" target="_blank" class="btn btn-program">
+                <span class="btn-icon">📋</span>
+                <span class="btn-text">Programme du séminaire</span>
+            </a>
+
+            <button class="btn btn-contact" onclick="contactus()">
+                <span class="btn-icon">☎️</span>
+                <span class="btn-text">Nous contacter</span>
+            </button>
+        </div>
+
+        <div class="contact-info">
+            <p>Pour plus d'information :</p>
+            <strong id="phone">0550562210</strong>
+            <p style="margin-top: 8px; font-size: 12px;">Cliquez sur le bouton ci-dessus pour appeler</p>
+        </div>
+
+        <div class="qr-section">
+            <h2>📱 Scannez ce QR Code</h2>
+            <div id="qrcode"></div>
+            <p class="qr-url" id="qr-url"></p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        function contactus() {
+            const phone = '0550562210';
+            window.location.href = `tel:${phone}`;
+        }
+
+        // Générer le QR Code
+        window.addEventListener('load', function() {
+            const pageUrl = window.location.href;
+            document.getElementById('qr-url').textContent = pageUrl;
+
+            // Créer le QR code
+            const qrcodeDiv = document.getElementById('qrcode');
+            qrcodeDiv.innerHTML = ''; // Nettoyer le contenu précédent
+            new QRCode(qrcodeDiv, {
+                text: pageUrl,
+                width: 200,
+                height: 200,
+                colorDark: "#667eea",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        });
+
+        // Redimensionner le QR code sur mobile
+        if (window.innerWidth < 480) {
+            document.querySelector('.container').style.padding = '20px';
+        }
+    </script>
+</body>
+</html>
