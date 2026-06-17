@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générer QR Code - Séminaire National</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .qr-display {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px dashed #667eea;
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        canvas {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 480px) {
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        button {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .btn-copy-url {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .url-section {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 10px;
+            word-break: break-all;
+            color: #555;
+            margin: 20px 0;
+            font-size: 12px;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #0c5aa0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 QR Code - Séminaire National</h1>
+        <p class="subtitle">Transport, Stockage des Hydrocarbures, Hydrogène et Réhabilitation des pipelines</p>
+
+        <div class="qr-display">
+            <div id="qrcode"></div>
+            <div class="url-section" id="url-display"></div>
+        </div>
+
+        <div class="button-group">
+            <button class="btn-download" onclick="downloadQR()">⬇️ Télécharger PNG</button>
+            <button class="btn-print" onclick="printQR()">🖨️ Imprimer</button>
+            <button class="btn-copy" onclick="copyImageToClipboard()">📋 Copier l'image</button>
+            <button class="btn-copy-url" onclick="copyURLToClipboard()">🔗 Copier l'URL</button>
+        </div>
+
+        <div class="success-message" id="successMessage">✅ Copié avec succès !</div>
+
+        <div class="info-box">
+            <strong>💡 Conseils :</strong><br>
+            • Téléchargez le QR code en PNG haute résolution<br>
+            • Imprimez-le sur vos documents de promotion<br>
+            • Partagez-le sur les réseaux sociaux<br>
+            • Scannez-le pour vérifier qu'il fonctionne
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <script>
+        const pageUrl = 'https://asaoud00.github.io/SAOUD/';
+        
+        // Générer le QR Code
+        window.addEventListener('load', function() {
+            document.getElementById('url-display').textContent = pageUrl;
+            
+            const qrcodeDiv = document.getElementById('qrcode');
+            new QRCode(qrcodeDiv, {
+                text: pageUrl,
+                width: 300,
+                height: 300,
+                colorDark: "#667eea",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        });
+
+        // Télécharger le QR code en PNG
+        function downloadQR() {
+            const qrcodeDiv = document.getElementById('qrcode');
+            const canvas = qrcodeDiv.querySelector('canvas');
+            
+            if (!canvas) {
+                alert('QR Code non généré. Veuillez rafraîchir la page.');
+                return;
+            }
+
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'QR-Code-Seminaire-National.png';
+            link.click();
+            
+            showSuccessMessage();
+        }
+
+        // Imprimer le QR code
+        function printQR() {
+            const qrcodeDiv = document.getElementById('qrcode');
+            const canvas = qrcodeDiv.querySelector('canvas');
+            
+            if (!canvas) {
+                alert('QR Code non généré. Veuillez rafraîchir la page.');
+                return;
+            }
+
+            const printWindow = window.open('', '', 'height=600,width=600');
+            printWindow.document.write('<html><head><title>Imprimer QR Code</title></head><body>');
+            printWindow.document.write('<div style="text-align: center; padding: 20px;">');
+            printWindow.document.write('<h2>1er Séminaire National</h2>');
+            printWindow.document.write('<p>Transport, Stockage des Hydrocarbures, Hydrogène et Réhabilitation des pipelines</p>');
+            printWindow.document.write('<img src="' + canvas.toDataURL() + '" style="max-width: 400px; margin: 20px 0;"/>');
+            printWindow.document.write('<p><strong>URL:</strong> ' + pageUrl + '</p>');
+            printWindow.document.write('</div></body></html>');
+            printWindow.document.close();
+            
+            setTimeout(() => {
+                printWindow.print();
+                showSuccessMessage();
+            }, 500);
+        }
+
+        // Copier l'image du QR code
+        function copyImageToClipboard() {
+            const qrcodeDiv = document.getElementById('qrcode');
+            const canvas = qrcodeDiv.querySelector('canvas');
+            
+            if (!canvas) {
+                alert('QR Code non généré. Veuillez rafraîchir la page.');
+                return;
+            }
+
+            canvas.toBlob(blob => {
+                const item = new ClipboardItem({ 'image/png': blob });
+                navigator.clipboard.write([item]).then(() => {
+                    showSuccessMessage();
+                }).catch(err => {
+                    alert('Erreur lors de la copie: ' + err);
+                });
+            });
+        }
+
+        // Copier l'URL
+        function copyURLToClipboard() {
+            navigator.clipboard.writeText(pageUrl).then(() => {
+                showSuccessMessage();
+            }).catch(err => {
+                alert('Erreur lors de la copie: ' + err);
+            });
+        }
+
+        // Afficher le message de succès
+        function showSuccessMessage() {
+            const message = document.getElementById('successMessage');
+            message.style.display = 'block';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
