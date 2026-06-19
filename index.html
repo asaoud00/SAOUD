@@ -162,8 +162,7 @@
         <p class="subtitle">Transport, Stockage des Hydrocarbures, Hydrogène et Réhabilitation des pipelines</p>
 
         <div class="location">
-            <strong>📍 Hôtel PLAZA de Boumerdès</strong><br>
-            QF8F+4V3, Boumerdès
+            <strong>📍 Hôtel PLAZA de Boumerdès</strong>
         </div>
 
         <div class="buttons-grid">
@@ -197,7 +196,6 @@
         <div class="qr-section">
             <h2>📱 Scannez ce QR Code</h2>
             <div id="qrcode"></div>
-            <p class="qr-url" id="qr-url"></p>
         </div>
     </div>
 
@@ -211,7 +209,6 @@
         // Générer le QR Code
         window.addEventListener('load', function() {
             const pageUrl = window.location.href;
-            document.getElementById('qr-url').textContent = pageUrl;
 
             // Créer le QR code
             const qrcodeDiv = document.getElementById('qrcode');
