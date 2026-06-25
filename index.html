@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1er Séminaire National - Transport et Stockage des Hydrocarbures</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -20,54 +15,26 @@
             justify-content: center;
             padding: 20px;
         }
-
         .container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             padding: 40px;
             max-width: 600px;
             width: 100%;
             text-align: center;
         }
-
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 28px;
-        }
-
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 16px;
-        }
-
-        .location {
-            background: #f0f4ff;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            color: #555;
-        }
-
-        .location strong {
-            color: #667eea;
-        }
-
+        h1 { color: #333; margin-bottom: 10px; font-size: 28px; }
+        .subtitle { color: #666; margin-bottom: 30px; font-size: 16px; }
+        .location { background: #f0f4ff; padding: 15px; border-radius: 10px; margin-bottom: 30px; color: #555; }
+        .location strong { color: #667eea; }
         .buttons-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 30px;
         }
-
-        @media (max-width: 480px) {
-            .buttons-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
+        @media (max-width: 480px) { .buttons-grid { grid-template-columns: 1fr; } }
         .btn {
             padding: 20px;
             border: none;
@@ -84,77 +51,114 @@
             color: white;
             text-align: center;
         }
-
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-location {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .btn-flyer {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-
-        .btn-program {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-        }
-
-        .btn-contact {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-        }
-
-        .btn-icon {
-            font-size: 24px;
-        }
-
-        .btn-text {
-            font-size: 14px;
-        }
-
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .btn-location { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .btn-flyer { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .btn-program { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .btn-comms { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+        .btn-contact { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .btn-icon { font-size: 24px; }
+        .btn-text { font-size: 14px; }
         .contact-info {
             background: #fff3cd;
             padding: 20px;
             border-radius: 10px;
             border-left: 4px solid #ffc107;
         }
+        .contact-info p { color: #856404; margin-bottom: 8px; }
+        .contact-info strong { color: #ff6b6b; font-size: 18px; }
+        .qr-section { margin-top: 30px; padding-top: 30px; border-top: 2px solid #eee; }
+        .qr-section h2 { color: #333; margin-bottom: 15px; font-size: 16px; }
+        #qrcode { display: flex; justify-content: center; margin: 15px 0; }
 
-        .contact-info p {
-            color: #856404;
-            margin-bottom: 8px;
-        }
-
-        .contact-info strong {
-            color: #ff6b6b;
-            font-size: 18px;
-        }
-
-        .qr-section {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 2px solid #eee;
-        }
-
-        .qr-section h2 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        #qrcode {
-            display: flex;
+        /* Modal communications */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            align-items: center;
             justify-content: center;
-            margin: 15px 0;
+            padding: 20px;
         }
-
-        .qr-url {
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white;
+            border-radius: 16px;
+            max-width: 680px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .modal-header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            padding: 20px 24px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .modal-header h2 { color: white; font-size: 18px; margin: 0; }
+        .modal-close {
+            background: rgba(255,255,255,0.3);
+            border: none;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .modal-close:hover { background: rgba(255,255,255,0.5); }
+        .modal-body { padding: 20px 24px; }
+        .comm-item {
+            border: 1px solid #e8e8f0;
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            transition: box-shadow 0.2s;
+        }
+        .comm-item:hover { box-shadow: 0 4px 16px rgba(161,140,209,0.2); }
+        .comm-num {
+            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+            color: white;
+            font-weight: 700;
+            font-size: 13px;
+            border-radius: 50%;
+            min-width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .comm-info { flex: 1; text-align: left; }
+        .comm-author { font-weight: 600; font-size: 14px; color: #333; margin-bottom: 4px; }
+        .comm-theme { font-size: 13px; color: #666; margin-bottom: 10px; line-height: 1.4; }
+        .comm-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            color: white;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 20px;
             font-size: 12px;
-            color: #999;
-            word-break: break-all;
-            display: none; /* URL masquée volontairement */
+            font-weight: 600;
+            transition: opacity 0.2s;
         }
+        .comm-link:hover { opacity: 0.85; }
     </style>
 </head>
 <body>
@@ -171,18 +175,19 @@
                 <span class="btn-icon">🗺️</span>
                 <span class="btn-text">Voir la localisation</span>
             </a>
-
             <a href="https://drive.google.com/file/d/1bLq56Uktq-GbcdIOYp5CiKMU_FEh0NHe/view?usp=sharing" target="_blank" class="btn btn-flyer">
                 <span class="btn-icon">📄</span>
                 <span class="btn-text">Télécharger le dépliant</span>
             </a>
-
             <a href="https://drive.google.com/file/d/1pFiMQ_9avpjxXHw7CXVbqwWt5pa2ivvZ/view?usp=sharing" target="_blank" class="btn btn-program">
                 <span class="btn-icon">📋</span>
                 <span class="btn-text">Programme du séminaire</span>
             </a>
-
-            <button class="btn btn-contact" onclick="contactus()">
+            <button class="btn btn-comms" onclick="openComms()">
+                <span class="btn-icon">📚</span>
+                <span class="btn-text">Communications</span>
+            </button>
+            <button class="btn btn-contact" onclick="contactus()" style="grid-column: 1 / -1;">
                 <span class="btn-icon">☎️</span>
                 <span class="btn-text">Nous contacter</span>
             </button>
@@ -197,24 +202,66 @@
         <div class="qr-section">
             <h2>📱 Scannez ce QR Code</h2>
             <div id="qrcode"></div>
-            <!-- URL volontairement non affichée ici -->
+        </div>
+    </div>
+
+    <!-- Modal Communications -->
+    <div class="modal-overlay" id="commsModal" onclick="closeOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>📚 Communications du séminaire</h2>
+                <button class="modal-close" onclick="closeComms()">✕</button>
+            </div>
+            <div class="modal-body" id="commsList"></div>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
-        function contactus() {
-            const phone = '0550562210';
-            window.location.href = `tel:${phone}`;
+        const communications = [
+            { n: 1, auteur: "Pr. MOHAMMEDI Kamel", theme: "Adaptation du gazoduc TransMED Algerie-UE au transport des vecteurs énergétiques verts dans le cadre de l'initiative EHB/SoutH2", lien: "https://drive.google.com/file/d/1GR3qTYGSmi8VF_Yy5PF_hxjP_AkpnBaY/view?usp=sharing" },
+            { n: 2, auteur: "Dr. HALIMI Djamal", theme: "Traitement des modes de défaillance pour la gestion de l'intégrité des équipements des hydrocarbures", lien: "https://drive.google.com/file/d/1Kk1xmpc01kn9Xkm3p9TMMa9bH951lflJ/view?usp=sharing" },
+            { n: 3, auteur: "TAZIBET Farouk et GUERFI Billal", theme: "Le module semi quantitatif Risk Assessement (SQRA)", lien: "https://drive.google.com/file/d/1wMMiQBQnhC3TvAadgBMW--sfczZQh5E2/view?usp=sharing" },
+            { n: 4, auteur: "ZOUAHRA Hakim et OUADDAH Abdelaziz", theme: "Improving pipeline integrity management through GIS and robust data quality assurance", lien: "https://drive.google.com/file/d/1M-xTZhugrQ2dcW8bcYiZCP1VGmaZqYi5/view?usp=sharing" },
+            { n: 5, auteur: "GUERFI Billal", theme: "Etude de cas : méthodologie complète du processus de gestion de l'intégrité d'une section de pipeline", lien: "https://drive.google.com/file/d/18tg1sSzkuiHVMGp3E5IiwYVVeinyQ_SZ/view?usp=sharing" },
+            { n: 6, auteur: "MEDJRAB Abir", theme: "Adaptation des infrastructures de transport de gaz naturel pour le transport de l'hydrogène", lien: "https://drive.google.com/file/d/1Gj77OnSL6lq2-mxWgl9zppbRgDYZZlpt/view?usp=sharing" },
+            { n: 7, auteur: "HAMZAOUI Mellissa et MEKDOUD Wouafa", theme: "Digitalisation et surveillance des pipelines par jumeau numérique", lien: "https://drive.google.com/file/d/1g_k2HaTdRKENdnaRVfQOOA8XYyHtEY9q/view?usp=sharing" },
+            { n: 8, auteur: "HADJ MIHOUB SIDI MOUSSA RANIA", theme: "La technologie Cured-in-Place pipe (CIPP) une solution pour la réhabilitation des pipelines", lien: "https://drive.google.com/file/d/1995b3rkV2xUJPrh7LgYhLCz5A0Wsc6tC/view?usp=sharing" },
+            { n: 9, auteur: "OUADAH Abdelaziz", theme: "Improving pipeline integrity management using machine learning techniques and GIS", lien: "https://drive.google.com/file/d/1E_qy4jnwaTvXVPiMunXgUIKsQD8IFs6b/view?usp=sharing" },
+            { n: 10, auteur: "MEKKI FETHI", theme: "Présentation de l'entreprise PMO de Constantine", lien: "https://docs.google.com/presentation/d/1ApZq3llLbZ7fBjZ2vAhq1bBOY8D7kkri/edit?usp=sharing&ouid=113161192961100167942&rtpof=true&sd=true" }
+        ];
+
+        function openComms() {
+            const list = document.getElementById('commsList');
+            list.innerHTML = communications.map(c => `
+                <div class="comm-item">
+                    <div class="comm-num">${c.n}</div>
+                    <div class="comm-info">
+                        <div class="comm-author">${c.auteur}</div>
+                        <div class="comm-theme">${c.theme}</div>
+                        <a href="${c.lien}" target="_blank" class="comm-link">📥 Consulter / Télécharger</a>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('commsModal').classList.add('active');
         }
 
-        // Générer le QR Code
+        function closeComms() {
+            document.getElementById('commsModal').classList.remove('active');
+        }
+
+        function closeOnOverlay(e) {
+            if (e.target === document.getElementById('commsModal')) closeComms();
+        }
+
+        function contactus() {
+            window.location.href = 'tel:0550562210';
+        }
+
         window.addEventListener('load', function() {
             const pageUrl = window.location.href;
-
-            // Créer le QR code
             const qrcodeDiv = document.getElementById('qrcode');
-            qrcodeDiv.innerHTML = ''; // Nettoyer le contenu précédent
+            qrcodeDiv.innerHTML = '';
             new QRCode(qrcodeDiv, {
                 text: pageUrl,
                 width: 200,
@@ -225,7 +272,6 @@
             });
         });
 
-        // Redimensionner le QR code sur mobile
         if (window.innerWidth < 480) {
             document.querySelector('.container').style.padding = '20px';
         }
