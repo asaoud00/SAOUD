@@ -153,6 +153,7 @@
             font-size: 12px;
             color: #999;
             word-break: break-all;
+            display: none; /* URL masquée volontairement */
         }
     </style>
 </head>
@@ -161,10 +162,12 @@
         <h1>🌐 1er Séminaire National</h1>
         <p class="subtitle">Transport, Stockage des Hydrocarbures, Hydrogène et Réhabilitation des pipelines</p>
 
-        <!-- Localisation masquée par demande -->
+        <div class="location">
+            <strong>📍 Hôtel PLAZA de Boumerdès</strong>
+        </div>
 
         <div class="buttons-grid">
-            <a href="https://maps.google.com" target="_blank" class="btn btn-location">
+            <a href="https://maps.google.com/?q=36.7525,3.4738" target="_blank" class="btn btn-location">
                 <span class="btn-icon">🗺️</span>
                 <span class="btn-text">Voir la localisation</span>
             </a>
@@ -194,6 +197,7 @@
         <div class="qr-section">
             <h2>📱 Scannez ce QR Code</h2>
             <div id="qrcode"></div>
+            <!-- URL volontairement non affichée ici -->
         </div>
     </div>
 
